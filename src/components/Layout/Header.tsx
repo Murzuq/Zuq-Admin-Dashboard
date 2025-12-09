@@ -9,7 +9,12 @@ import {
   Sun,
 } from 'lucide-react';
 
-function Header({ sidebarCollapsed, onToggleSidebar }) {
+type HeaderProps = {
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
+};
+
+function Header({ sidebarCollapsed, onToggleSidebar }: HeaderProps) {
   return (
     <div className='border-b border-slate-200/50 bg-white/80 px-6 py-4 backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/80'>
       <div className='flex items-center justify-between'>
