@@ -130,7 +130,7 @@ function Sidebar({
 
   return (
     <div
-      className={`${collapsed ? 'w-20' : 'w-72'} relative z-10 flex flex-col border-r border-slate-200/50 bg-white/80 backdrop-blur-xl transition duration-300 ease-in-out dark:border-slate-700/50 dark:bg-slate-900/80`}
+      className={`${collapsed ? 'w-20' : 'w-72'} relative z-10 flex flex-col border-r border-slate-200/50 bg-white/80 backdrop-blur-xl transition-all duration-300 ease-in-out dark:border-slate-700/50 dark:bg-slate-900/80`}
     >
       {/* Logo */}
       <div className='border-b border-slate-200/50 p-6 dark:border-slate-700/50'>
@@ -171,22 +171,21 @@ function Sidebar({
                 <div className='flex items-center space-x-3'>
                   <item.icon className={`h-5 w-5`} />
                   {/* Conditional Render */}
-                  <>
-                    {!collapsed && (
+                  {!collapsed && (
+                    <>
                       <span className='ml-2 font-medium'>{item.label}</span>
-                    )}
-
-                    {item.badge && (
-                      <span className='rounded-full bg-red-500 px-2 py-1 text-xs text-white'>
-                        {item.badge}
-                      </span>
-                    )}
-                    {item.count && (
-                      <span className='rounded-full bg-slate-200 px-2 py-1 text-xs text-slate-600 dark:bg-slate-700 dark:text-slate-300'>
-                        {item.count}
-                      </span>
-                    )}
-                  </>
+                      {item.badge && (
+                        <span className='rounded-full bg-red-500 px-2 py-1 text-xs text-white'>
+                          {item.badge}
+                        </span>
+                      )}
+                      {item.count && (
+                        <span className='rounded-full bg-slate-200 px-2 py-1 text-xs text-slate-600 dark:bg-slate-700 dark:text-slate-300'>
+                          {item.count}
+                        </span>
+                      )}
+                    </>
+                  )}
                 </div>
 
                 {!collapsed && item.submenu && (
