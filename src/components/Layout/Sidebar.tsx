@@ -15,12 +15,25 @@ import {
   Zap,
 } from 'lucide-react';
 
-const menuItems = [
+type SubMenuItem = {
+  id: string;
+  label: string;
+};
+
+type MenuItem = {
+  id: string;
+  icon: React.ElementType;
+  label: string;
+  badge?: string;
+  count?: string;
+  submenu?: SubMenuItem[];
+};
+
+const menuItems: MenuItem[] = [
   {
     id: 'dashboard',
     icon: LayoutDashboard,
     label: 'Dashboard',
-    active: true,
     badge: 'New',
   },
   {
@@ -28,7 +41,7 @@ const menuItems = [
     icon: BarChart3,
     label: 'Analytics',
     submenu: [
-      { id: 'overview', label: 'Overview' },
+      { id: 'analytics-overview', label: 'Overview' },
       { id: 'reports', label: 'Reports' },
       { id: 'insights', label: 'Insights' },
     ],
@@ -88,20 +101,22 @@ const menuItems = [
   },
 ];
 
+type SidebarProps = {
+  collapsed: boolean;
+  onToggle: () => void;
+  currentPage: string;
+  onPageChange: (page: string) => void;
+};
+
 function Sidebar({
   collapsed,
   onToggle,
   currentPage,
   onPageChange,
-}: {
-  collapsed: boolean;
-  onToggle: () => void;
-  currentPage: string;
-  onPageChange: (page: string) => void | any;
-}) {
+}: SidebarProps) {
   const [expandedItems, setExpandedItems] = useState(new Set(['analytics']));
 
-  const toggleExpanded = (itemid: any) => {
+  const toggleExpanded = (itemid: string) => {
     const newExpanded = new Set(expandedItems);
 
     if (newExpanded.has(itemid)) {
@@ -111,7 +126,6 @@ function Sidebar({
     }
 
     setExpandedItems(newExpanded);
-    console.log(expandedItems);
   };
 
   return (
@@ -121,7 +135,7 @@ function Sidebar({
       {/* Logo */}
       <div className='border-b border-slate-200/50 p-6 dark:border-slate-700/50'>
         <div className='flex items-center space-x-3'>
-          <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-r from-blue-600 to-purple-50 shadow-lg'>
+          <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-r from-blue-600 to-purple-500 shadow-lg'>
             <Zap className='h-6 w-6 text-white' />
           </div>
 
@@ -145,11 +159,8 @@ function Sidebar({
           return (
             <div key={item.id}>
               <button
-                className={`flex w-full items-center justify-between rounded-xl p-3 transition-all duration-200 ${currentPage === item.id || item.active ? 'bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/50'}`}
+                className={`flex w-full items-center justify-between rounded-xl p-3 transition-all duration-200 ${currentPage === item.id ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800/50'}`}
                 onClick={() => {
-                  {
-                    console.log(currentPage);
-                  }
                   if (item.submenu) {
                     toggleExpanded(item.id);
                   } else {
@@ -179,7 +190,11 @@ function Sidebar({
                 </div>
 
                 {!collapsed && item.submenu && (
-                  <ChevronDown className={`h-4 w-4 transition-transform`} />
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${
+                      expandedItems.has(item.id) ? 'rotate-180' : ''
+                    }`}
+                  />
                 )}
               </button>
 
@@ -188,7 +203,15 @@ function Sidebar({
                 <div className='mt-2 ml-8 space-y-1'>
                   {item.submenu?.map((subitem) => {
                     return (
-                      <button className='text w-full rounded-lg p-2 text-left text-sm text-slate-600 transition-all hover:bg-slate-100 hover:text-slate-800 dark:text-slate-100 dark:hover:bg-slate-800/50 dark:hover:text-slate-200'>
+                      <button
+                        key={subitem.id}
+                        onClick={() => onPageChange(subitem.id)}
+                        className={`w-full rounded-lg p-2 text-left text-sm transition-colors duration-200 ${
+                          currentPage === subitem.id
+                            ? 'bg-slate-100 font-semibold text-slate-800 dark:bg-slate-800 dark:text-slate-100'
+                            : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
+                        }`}
+                      >
                         {subitem.label}
                       </button>
                     );
@@ -215,7 +238,7 @@ function Sidebar({
                   Alabi Murzuq
                 </p>
                 <p className='truncate text-xs text-slate-500 dark:text-slate-400'>
-                  Adminstrator
+                  Administrator
                 </p>
               </div>
             </div>
