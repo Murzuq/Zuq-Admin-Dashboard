@@ -7,6 +7,7 @@ function Dashboard() {
       {/* StatsGrid */}
       <StatsGrid />
 
+      {/* Charts Section */}
       <ChartSection />
     </div>
   );
