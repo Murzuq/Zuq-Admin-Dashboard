@@ -2,7 +2,7 @@ import StatsGrid from './StatsGrid';
 
 function Dashboard() {
   return (
-    <div className='space-y-6'>
+    <div className='m-3'>
       {/* StatsGrid */}
       <StatsGrid />
     </div>
