@@ -9,13 +9,13 @@ import {
 } from 'recharts';
 
 function RevenueChart() {
-  //   type Data = {
-  //     month: string;
-  //     revenue: number;
-  //     expenses: number;
-  //   };
+  type Data = {
+    month: string;
+    revenue: number;
+    expenses: number;
+  };
 
-  const data = [
+  const data: Data[] = [
     { month: 'Jan', revenue: 45000, expenses: 32000 },
     { month: 'Feb', revenue: 52000, expenses: 38000 },
     { month: 'Mar', revenue: 48000, expenses: 35000 },
