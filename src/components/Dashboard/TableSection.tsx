@@ -44,7 +44,15 @@ const recentOrders: RecentOrders[] = [
   },
 ];
 
-const topProducts = [
+type TopProducts = {
+  name: string;
+  sales: number;
+  revenue: string;
+  trend: string;
+  change: string;
+};
+
+const topProducts: TopProducts[] = [
   {
     name: 'MacBook Pro 16',
     sales: 1247,
