@@ -1,4 +1,4 @@
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, TrendingDown, TrendingUp } from 'lucide-react';
 
 type RecentOrders = {
   id: string;
@@ -41,6 +41,37 @@ const recentOrders: RecentOrders[] = [
     amount: '$599',
     status: 'cancelled',
     date: '2024-01-14',
+  },
+];
+
+const topProducts = [
+  {
+    name: 'MacBook Pro 16',
+    sales: 1247,
+    revenue: '$2,987,530',
+    trend: 'up',
+    change: '+12%',
+  },
+  {
+    name: 'iPhone 15 Pro',
+    sales: 2156,
+    revenue: '$2,587,044',
+    trend: 'up',
+    change: '+8%',
+  },
+  {
+    name: 'Airpods Pro',
+    sales: 3421,
+    revenue: '$852,229',
+    trend: 'down',
+    change: '-3%',
+  },
+  {
+    name: 'iPad Air',
+    sales: 987,
+    revenue: '$591,213',
+    trend: 'up',
+    change: '+15%',
   },
 ];
 
@@ -144,6 +175,63 @@ function TableSection() {
               })}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Top Prodcuts */}
+      <div className='overflow-hidden rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/80'>
+        <div className='border-b border-slate-200/50 p-6 dark:border-slate-700/50'>
+          <div className='flex items-center justify-between'>
+            <div className='text-lg font-bold text-slate-800 dark:text-white'>
+              <h3 className='text-lg font-bold text-slate-800 dark:text-white'>
+                Top Products
+              </h3>
+            </div>
+            <p className='text-sm text-slate-500 dark:text-slate-400'>
+              Best perfoming products
+            </p>
+          </div>
+          <button className='text-sm font-medium text-blue-600 hover:text-blue-700'>
+            View All
+          </button>
+        </div>
+
+        {/* Dynamic Date */}
+        <div className='space-y-4 p-6'>
+          {topProducts.map((product, index) => {
+            return (
+              <div
+                className='flex items-center justify-between rounded-xl p-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                key={index}
+              >
+                <div className='flex-1'>
+                  <h4 className='text-sm font-semibold text-slate-800 dark:text-white'>
+                    {product.name}
+                  </h4>
+                  <p className='text-xs text-slate-500 dark:text-slate-400'>
+                    {product.sales}
+                  </p>
+                </div>
+                <div className='text-right'>
+                  <p className='text text-sm font-semibold text-slate-800 dark:text-white'>
+                    {product.revenue}
+                  </p>
+                  <div className='flex items-center space-x-1'>
+                    {product.trend === 'up' ? (
+                      <TrendingUp className='h-3 w-3 text-emerald-500' />
+                    ) : (
+                      <TrendingDown className='h-3 w-3 text-red-500' />
+                    )}
+                    <span
+                      className={`text-xs font-medium ${product.trend === 'up' ? 'text-emerald-500' : 'text-red-500'}`}
+                    >
+                      {product.change}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
