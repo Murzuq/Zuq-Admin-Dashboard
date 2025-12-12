@@ -3,11 +3,14 @@ import {
   ChevronDown,
   Filter,
   Menu,
+  Moon,
   Plus,
   Search,
   Settings,
   Sun,
 } from 'lucide-react';
+
+import useDarkMode from '../../hooks/useDarkMode';
 
 type HeaderProps = {
   sidebarCollapsed: boolean;
@@ -15,6 +18,8 @@ type HeaderProps = {
 };
 
 function Header({ sidebarCollapsed, onToggleSidebar }: HeaderProps) {
+  const { theme, toggleTheme } = useDarkMode();
+
   return (
     <div className='border-b border-slate-200/50 bg-white/80 px-6 py-4 backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-900/80'>
       <div className='flex items-center justify-between'>
@@ -58,8 +63,26 @@ function Header({ sidebarCollapsed, onToggleSidebar }: HeaderProps) {
             <span className='text-sm font-medium'>New</span>
           </button>
           {/* Toggle */}
-          <button className='rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'>
-            <Sun className='h-5 w-5' />
+          <button
+            onClick={toggleTheme}
+            className='rounded-xl p-2.5 text-slate-600 transition-colors hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+          >
+            <div className='relative h-5 w-5'>
+              <Sun
+                className={`absolute inset-0 h-5 w-5 transition-all duration-500 ${
+                  theme === 'dark'
+                    ? 'scale-100 rotate-0 opacity-100'
+                    : 'scale-0 -rotate-90 opacity-0'
+                }`}
+              />
+              <Moon
+                className={`absolute inset-0 h-5 w-5 transition-all duration-500 ${
+                  theme === 'dark'
+                    ? 'scale-0 rotate-90 opacity-0'
+                    : 'scale-100 rotate-0 opacity-100'
+                }`}
+              />
+            </div>
           </button>
 
           {/* Notification */}

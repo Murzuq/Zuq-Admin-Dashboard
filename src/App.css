@@ -1,1 +1,19 @@
 @import 'tailwindcss';
+
+/* Force dark mode to work with the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  *,
+  ::after,
+  ::before {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+
+  html {
+    @apply bg-slate-50 text-slate-900;
+  }
+  html.dark {
+    @apply bg-slate-900 text-slate-50;
+  }
+}
